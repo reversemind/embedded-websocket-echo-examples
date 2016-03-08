@@ -11,11 +11,13 @@
       <input id="connect" class="button" type="submit" name="connect" value="connect"/>
       <input id="close" class="button" type="submit" name="close" value="close" disabled="disabled"/>
       <input id="hello" class="button" type="submit" name="hello" value="send hello" disabled="disabled"/>
+      <input id="open" class="button" type="submit" name="open sessions" value="open sessions" disabled="disabled"/>
     </div>
     <script type="text/javascript">
     $("connect").onclick = function(event) { wstool.connect(); return false; }
     $("close").onclick = function(event) { wstool.close(); return false; }
     $("hello").onclick = function(event) { wstool.write("Hello There"); return false; }
+    $("open").onclick = function(event) { wstool.write("open"); return false; }
     </script>
   </body>
 </html>

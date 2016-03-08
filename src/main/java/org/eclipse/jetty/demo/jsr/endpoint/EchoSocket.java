@@ -1,5 +1,7 @@
 package org.eclipse.jetty.demo.jsr.endpoint;
 
+import java.util.Set;
+
 import javax.websocket.CloseReason;
 import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
@@ -45,10 +47,26 @@ public class EchoSocket extends Endpoint implements MessageHandler.Whole<String>
     @Override
     public void onMessage(String message)
     {
-        LOG.info("Echoing back text message [{}]",message);
-        if (this.session != null && this.session.isOpen() && this.remote != null)
+        if (this.session == null || !this.session.isOpen() || this.remote == null)
+            return;
+
+        switch (message)
         {
-            this.remote.sendText(message);
+            case "open":
+                LOG.info("Echoing back open session info [{}]", message);
+                Set<Session> openSessions = session.getOpenSessions();
+                int len = openSessions.size();
+                this.remote.sendText(String.format("Open Sessions.size() = %d", len));
+
+                int idx = 0;
+                for (Session open : openSessions)
+                {
+                    this.remote.sendText(String.format("  session[%d] = %s", idx++, open));
+                }
+                break;
+            default:
+                LOG.info("Echoing back message [{}]", message);
+                this.remote.sendText(message);
         }
     }
 }
