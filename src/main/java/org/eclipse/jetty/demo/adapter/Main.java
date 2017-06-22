@@ -24,9 +24,12 @@ public class Main
 
         // Add default servlet (to serve the html/css/js)
         URL urlStatics = Thread.currentThread().getContextClassLoader().getResource("index.html");
+
         Objects.requireNonNull(urlStatics,"Unable to find index.html in classpath");
         String urlBase = urlStatics.toExternalForm().replaceFirst("/[^/]*$","/");
+
         ServletHolder defHolder = new ServletHolder("default",new DefaultServlet());
+
         defHolder.setInitParameter("resourceBase",urlBase);
         defHolder.setInitParameter("dirAllowed","true");
         context.addServlet(defHolder,"/");

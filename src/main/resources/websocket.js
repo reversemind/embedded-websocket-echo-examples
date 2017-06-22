@@ -29,7 +29,7 @@ var wstool = {
         this._scount = 0;
 
         try {
-            this._ws = new WebSocket(location);
+            this._ws = new WebSocket(location, 'binary');
             this._ws.onopen = this._onopen;
             this._ws.onmessage = this._onmessage;
             this._ws.onclose = this._onclose;
